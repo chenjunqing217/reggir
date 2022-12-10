@@ -18,6 +18,12 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * 用户登录
+     * @param request
+     * @param employee
+     * @return
+     */
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee){
         R out = employeeService.login(employee,request);
@@ -25,11 +31,23 @@ public class EmployeeController {
         return out;
     }
 
+    /**
+     * 用户退出
+     * @param request
+     * @return
+     */
     @PostMapping("/logout")
     public R<Employee> logout (HttpServletRequest request){
         R out = employeeService.logout(request);
         return out;
     }
+
+    /**
+     * 新增员工
+     * @param request
+     * @param employee
+     * @return
+     */
     @PostMapping
     public R<String> save (HttpServletRequest request,@RequestBody Employee employee){
         log.info("开始新增员工信息：{}",employee.toString());
@@ -51,6 +69,11 @@ public class EmployeeController {
         return out;
     }
 
+    /**
+     * 员工管理，启动，禁用
+     * @param employee
+     * @return
+     */
     @PutMapping
     public R<String> updateOrDelete (@RequestBody Employee employee){
         log.info("员工管理，启动，禁用 {}",employee.toString());
@@ -58,6 +81,11 @@ public class EmployeeController {
         return out;
     }
 
+    /**
+     * 查询员工
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<Employee> getdateById (@PathVariable Long id){
         R out = employeeService.getdateById(id);
