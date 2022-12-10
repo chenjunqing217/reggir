@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.reggie.mapper.SetmealDishMapper">
+
+    <!--删除套餐菜品中 - 套餐删除-->
+    <update id="updateBatchBySetmealId" >
+        update setmeal_dish
+        set is_deleted = 1,
+        update_time = now()
+        where setmeal_id in
+        <foreach collection="ids" item="udo" separator="," open="(" close=")">
+            #{udo}
+        </foreach>
+    </update>
+
+    <update id="updateSetmealDishList">
+        update setmeal_dish
+        set is_deleted = 1,
+            update_time = now()
+        where setmeal_id = #{setmealId}
+    </update>
+
+</mapper>
