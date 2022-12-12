@@ -111,4 +111,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         Page<Orders> page2 = this.page(page1, lambdaQueryWrapper);
         return R.success(page2);
     }
+
+    /**
+     * 所有订单展示
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public R allorderPage(int page, int pageSize) {
+        Page<Orders> page1 = new Page<>(page,pageSize);
+        LambdaQueryWrapper<Orders> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        Page<Orders> page2 = this.page(page1, lambdaQueryWrapper);
+        return R.success(page2);
+    }
 }

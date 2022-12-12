@@ -8,4 +8,6 @@ public interface OrderService extends IService<Orders> {
     R submit(Orders orders);
 
     R orderPage(int page, int pageSize);
+
+    R allorderPage(int page, int pageSize);
 }

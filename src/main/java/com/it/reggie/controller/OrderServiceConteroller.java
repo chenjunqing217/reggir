@@ -29,7 +29,7 @@ public class OrderServiceConteroller {
     }
 
     /**
-     * 订单展示
+     * APP订单展示
      * @param page
      * @param pageSize
      * @return
@@ -37,6 +37,18 @@ public class OrderServiceConteroller {
     @GetMapping("/orderPage")
     public R<List<Orders>> orderPage (int page,int pageSize){
         R out = orderService.orderPage(page,pageSize);
+        return out;
+    }
+
+    /**
+     * 所有订单展示
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page")
+    public R<List<Orders>> allorderPage (int page,int pageSize){
+        R out = orderService.allorderPage(page,pageSize);
         return out;
     }
 }
