@@ -17,6 +17,8 @@ import com.it.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
      * @return
      */
     @Override
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R saveWithDish(SetmealDto setmealDto) {
 //        保存套餐
         this.save(setmealDto);
@@ -88,6 +91,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
      * @return
      */
     @Override
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R deleteSetmeals(List<Long> ids) {
         LambdaQueryWrapper<Setmeal> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(Setmeal::getId,ids);
@@ -160,8 +164,10 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
      * 根据分类ID查询套餐内容。
      * @param setmeal
      * @return
+     * @Cacheable:将结果放入redis 有直接返回，没有查询存入redis；
      */
     @Override
+    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
     public R showForAppList(Setmeal setmeal) {
         LambdaQueryWrapper<Setmeal> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(setmeal.getCategoryId() != null,Setmeal::getCategoryId,setmeal.getCategoryId());
